@@ -86,6 +86,10 @@ input::placeholder{
     outline: 2px solid var(--topaz);
 }
 
+.button-selected{
+    background: var(--topaz);
+}
+
 .tip div{
     display: grid;
     grid-template-columns: repeat(2, 1fr);

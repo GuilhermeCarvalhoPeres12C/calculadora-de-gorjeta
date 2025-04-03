@@ -1,6 +1,7 @@
 let bill = 0
 let tipPercentage = 0
 let numberOfPeople = 0
+let buttonSelected = null
 
 let BillInput = document.querySelector("#bill")
 billInput.addEventListener("input", reciveBillValue)
@@ -20,6 +21,9 @@ function receiveNumberOfPeople(){
     numberOfPeople = numberOfPeopleInput.valueAsNumber
 
     calculate()
+}
+function receiveTipPercentageValue(value){
+    buttonSelected = document.querySelector("")
 }
 
 function calculate(){
