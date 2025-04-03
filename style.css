@@ -113,9 +113,9 @@ main {
           }
 
           .button-selected {
-                 background: var(--topaz);
-
-          }
+            background: var(--water-leaf) ;
+            color: var(--sherpa-blue) ;
+        }
 
           input {
               width: 100%;

@@ -1,100 +1,78 @@
-let bill = 0
-let tipPercentage = 0
-let numberOfPeople = 0
-let buttonSelected = null
+let bill = 0;
+let tipPercentage = 0;
+let numberOfPeople = 0;
+let buttonSelected = null;
 
 function receiveBillValue() {
-    bill = document.querySelector("#bill").valueAsNumber
-    calculate()
-
-    
+    bill = document.querySelector("#bill").valueAsNumber || 0;
+    calculate();
 }
 
 function receiveNumberOfPeopleValue() {
-     numberOfPeople = document.querySelector("#people").valueAsNumber
-     calculate()
-
-
+    numberOfPeople = document.querySelector("#people").valueAsNumber || 1; // Evita divisão por zero
+    calculate();
 }
 
 function receiveTipPercentageValue(value) {
-    removeButtonSelectedClass()
+    removeButtonSelectedClass();
 
-    let customTipInput = document.querySelector("#custom-tip")
-
-    
-   if (customTipInput.value !== "") {
-        customTipInput.value = ""
-
+    let customTipInput = document.querySelector("#custom-tip");
+    if (customTipInput.value !== "") {
+        customTipInput.value = "";
     }
-    
-    tipPercentage = value / 100
-    
 
-    buttonSelected = document.querySelector(#button-${value})
-    buttonSelected.classList.add("button-selected")
-    calculate()
+    tipPercentage = value / 100;
+    buttonSelected = document.querySelector(`#button-${value}`);
+    buttonSelected.classList.add("button-selected");
 
-
+    calculate();
 }
 
 function receiveCustomTipPercentageValue() {
-    removeButtonSelectedClass()
-    buttonSelected = null
- 
-      tipPercentage = document.querySelector("#custom-tip").valueAsNumber / 100
-      calculate()
-      
+    removeButtonSelectedClass();
+    buttonSelected = null;
 
-
+    tipPercentage = (document.querySelector("#custom-tip").valueAsNumber || 0) / 100;
+    calculate();
 }
 
 function calculate() {
-      if (bill !== 0 && tipPercentage !== 0 && numberOfPeople !== 0) {
-           let amountStrong = document.querySelector(".amount strong")
-           let tipAmountPerson = (bill * tipPercentage) / numberOfPeople
+    // Garantindo que os valores são numéricos e evitando NaN
+    if (isNaN(bill) || isNaN(tipPercentage) || isNaN(numberOfPeople) || numberOfPeople === 0) {
+        document.querySelector(".amount strong").innerText = "$0.00";
+        document.querySelector(".total strong").innerText = "$0.00";
+        return;
+    }
 
-           amountStrong.innerText = $${tipAmountPerson.toFixed(2)}
+    let tipAmountPerson = (bill * tipPercentage) / numberOfPeople;
+    let totalPerson = (bill / numberOfPeople) + tipAmountPerson;
 
-           let totalStrong = document.querySelector(".total strong")
-           let totalPerson = (bill / numberOfPeople) + tipAmountPerson
-           totalStrong.innerText = $${totalPerson.toFixed(2)}
-
-      }  else {
-           console.log("preencha tudo")
-
-      }
-
+    document.querySelector(".amount strong").innerText = `$${tipAmountPerson.toFixed(2)}`;
+    document.querySelector(".total strong").innerText = `$${totalPerson.toFixed(2)}`;
 }
 
 function reset() {
-    bill = 0
-    document.querySelector("#bill").value = ""
-     
+    bill = 0;
+    document.querySelector("#bill").value = "";
+
+    numberOfPeople = 1;
+    document.querySelector("#people").value = "";
+
+    tipPercentage = 0;
+    removeButtonSelectedClass();
     
-    numberOfPeople = 0
-    document.querySelector("#people").value = ""
-
-    tipPercentage = 0
-    removeButtonSelectedClass()
-
-    let customTipInput = document.querySelector("#custom-tip")
-
-    
-   if (customTipInput.value !== "") {
-        customTipInput.value = ""
-
+    let customTipInput = document.querySelector("#custom-tip");
+    if (customTipInput.value !== "") {
+        customTipInput.value = "";
     }
 
-    document.querySelector(".amount strong").innerText = "$0.00"
-    document.querySelector(".total strong").innerText = "$0.00"
+    document.querySelector(".amount strong").innerText = "$0.00";
+    document.querySelector(".total strong").innerText = "$0.00";
 
+    buttonSelected = null;
 }
 
 function removeButtonSelectedClass() {
-
-    if (buttonSelected !== null) {
-        buttonSelected.classList.remove("button-selected")
-    }
-
+    let buttons = document.querySelectorAll(".tip button");
+    buttons.forEach((btn) => btn.classList.remove("button-selected"));
 }
